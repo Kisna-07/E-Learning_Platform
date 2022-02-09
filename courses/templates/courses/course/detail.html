@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+
+{{ object.title }}
+{% endblock %}
+{% block content %}
+{% with subject=course.subject %}
+<h1 class="py-3 text-center display-5">
+    {{ object.title }}
+</h1>
+
+<div class="container">
+    <main>
+        <div class="row g-5">
+            <!-- --------------------- -->
+            <div class="col-md-7 col-lg-8">
+                <h2 class="mb-3">
+                    Overview</a></h2>
+                <div class="cointainer">
+                    <div class="row g-3">
+                        <div id="module-contents">
+                            <p>
+                                <a href="{% url 'course_list_subject' subject.slug %}" class="text-decoration-none">
+                                    {{ subject.title }}</a>.
+                                {{ course.modules.count }} modules.
+                                Instructor: {{ course.owner.get_full_name }}
+                            </p>
+                            {{ object.overview|linebreaks }}
+                            {% if request.user.is_authenticated %}
+                            <div class="container">
+                                <form action="{% url 'student_enroll_course' %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        {{ enroll_form | crispy }}
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" name="Enroll now" class="btn btn-primary btn-md"  value="Enroll now">
+                                    </div>
+                                </form>
+                            </div>
+                            {% else %}
+                            <a href="{% url 'student_registration' %}" class="btn btn-primary">
+                                Register to enroll
+                            </a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% endwith %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}My courses{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <main>
+        <div class="py-4 text-center">
+            <h1>{{ module.title }}</h1>
+        </div>
+
+        <div class="row g-5">
+            <!-- --------------------- -->
+            <div class="col-md-7 col-lg-8">
+                <h2 class="mb-3 text-primary">My courses</h2>
+                <div class="cointainer">
+                    <div class="row g-3">
+                        <div id="module-contents">
+                            {% for course in object_list %}
+                            <h3 class="text-muted">{{ item.title }}</h3>
+                            <ul class="list-group mb-3">
+                                <li class="list-group-item d-flex justify-content-between lh-sm">
+
+                                    <div class="course-info">
+                                        <h3>{{ course.title }}</h3>
+                                        <p class="h6"><a href="{% url 'student_course_detail' course.id %}" class="text-decoration-none">
+                                                Access contents</a></p>
+                                    </div>
+                                </li>
+                            </ul>
+                            {% empty %}
+                            <ul class="list-group mb-3">
+                                <li class="list-group-item d-flex justify-content-between lh-sm">
+                                    <div>
+                                        <p class="h6">
+                                            You are not enrolled in any courses yet.
+                                            <a href="{% url 'course_list' %}" class="text-decoration-none">Browse courses</a>
+                                            to enroll in a course.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<br>
+<br>
+<!-- ---------------------- -->
+{% endblock %}

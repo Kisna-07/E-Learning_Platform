@@ -1,0 +1,6 @@
+.boxed {
+    display: flex;
+    align-content: flex-start;
+    margin-right: auto;
+    justify-content: space-between;
+  }
